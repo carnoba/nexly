@@ -1,0 +1,23 @@
+# Python 
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Nexly Specific
+nexly.db
+*.log
+.browser_profile/
+outputs/
+*.csv
+
+# Sensitive
+.env
+secret.json
+
+# IDE
+.vscode/
+.idea/

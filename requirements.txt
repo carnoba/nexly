@@ -1,0 +1,12 @@
+playwright
+playwright-stealth
+streamlit
+pandas
+beautifulsoup4
+requests
+python-whois
+dnspython
+google-generativeai
+nest_asyncio
+pyinstaller
+customtkinter
