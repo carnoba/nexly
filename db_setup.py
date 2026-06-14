@@ -56,6 +56,33 @@ def setup_database(db_path):
         UNIQUE(niche, step_number)
     )''')
 
+    c.execute('''CREATE TABLE IF NOT EXISTS niche_scripts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ProfileType TEXT UNIQUE,
+        ProfileTitle TEXT,
+        TargetKeywords TEXT,
+        Step1_Subj1 TEXT, Step1_Body1 TEXT,
+        Step1_Subj2 TEXT, Step1_Body2 TEXT,
+        Step1_Subj3 TEXT, Step1_Body3 TEXT,
+        Step1_Subj4 TEXT, Step1_Body4 TEXT,
+        Step1_Subj5 TEXT, Step1_Body5 TEXT,
+        Step2_Subj TEXT, Step2_Body TEXT,
+        Step3_Subj TEXT, Step3_Body TEXT,
+        Step4_Subj TEXT, Step4_Body TEXT,
+        Step5_Subj TEXT, Step5_Body TEXT
+    )''')
+
+    # Initialize basic profiles if they don't exist
+    profiles = [
+        ('General', 'General Catch-All', 'catchall'),
+        ('Niche_1', 'Dentist', 'tooth, clinic, dental, dentist, teeth'),
+        ('Niche_2', 'Junk Removal', 'junk, removal, waste, haul, dispose'),
+        ('Niche_3', 'Real Estate', 'realtor, estate, homes, property')
+    ]
+    for p_id, p_title, p_keys in profiles:
+        c.execute("INSERT OR IGNORE INTO niche_scripts (ProfileType, ProfileTitle, TargetKeywords) VALUES (?, ?, ?)",
+                   (p_id, p_title, p_keys))
+
     c.execute('''CREATE TABLE IF NOT EXISTS activity_logs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -64,9 +91,6 @@ def setup_database(db_path):
         details TEXT,
         status TEXT DEFAULT 'Info'
     )''')
-
-    c.execute("INSERT OR IGNORE INTO scripts (niche, step_number, subject, body) VALUES (?,?,?,?)",
-              ("General", 1, "Quick question about {{Company}}", "Hi {{Owner}},\n\nI noticed your business online and wanted to reach out.\n\nBest regards"))
 
     # Migration: Add campaign_id to leads if missing
     columns = [col[1] for col in c.execute("PRAGMA table_info(leads)").fetchall()]
@@ -79,6 +103,13 @@ def setup_database(db_path):
         c.execute("ALTER TABLE leads ADD COLUMN city TEXT")
     if 'linkedin_url' not in columns:
         c.execute("ALTER TABLE leads ADD COLUMN linkedin_url TEXT")
+
+    # Migration: Add account health columns
+    acc_columns = [col[1] for col in c.execute("PRAGMA table_info(accounts)").fetchall()]
+    if 'bounces' not in acc_columns:
+        c.execute("ALTER TABLE accounts ADD COLUMN bounces INTEGER DEFAULT 0")
+    if 'is_selected' not in acc_columns:
+        c.execute("ALTER TABLE accounts ADD COLUMN is_selected INTEGER DEFAULT 1")
 
     # Migration: Add niche and city to campaigns if missing
     camp_columns = [col[1] for col in c.execute("PRAGMA table_info(campaigns)").fetchall()]
