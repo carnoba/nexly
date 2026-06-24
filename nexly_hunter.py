@@ -7,7 +7,7 @@ from playwright.async_api import async_playwright
 from nexly_utils import log_activity, save_lead
 
 # ==========================================
-# 📧 REGEX & CONFIG (From Elite Scraper)
+# REGEX & CONFIG (From Elite Scraper)
 # ==========================================
 EMAIL_REGEX = re.compile(r'[a-zA-Z0-9._%+-]+(?:\s*@\s*|\s*\[at\]\s*|\s*\(at\)\s*)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', re.IGNORECASE)
 LINKEDIN_REGEX = re.compile(r"https?://(?:www\.)?linkedin\.com/in/[a-zA-Z0-9\-_%]+/?", re.IGNORECASE)
