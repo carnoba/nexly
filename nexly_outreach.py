@@ -16,5 +16,5 @@ class NexlyOutreach:
 
     def process_queue(self, niche):
         log_activity("Outreach", "Processing", f"Checking queue for {niche}")
-        # Logic to fetch and send...
+       
         pass
