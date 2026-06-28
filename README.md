@@ -1,4 +1,4 @@
-# 📈 Nexly Elite v3.0: Autonomous AI B2B Outreach System
+# 📈 Nexly Elite : Autonomous AI B2B Outreach System
 
 Nexly is a state-of-the-art, autonomous B2B lead generation and cold outreach suite. Designed for high-performance sales teams and digital agencies, it automates the entire funnel—from hunting leads across the web to sending highly personalized, multi-step email sequences.
 
